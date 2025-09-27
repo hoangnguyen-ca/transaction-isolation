@@ -21,8 +21,9 @@ In this example, concurrent reads and writes transactions operate on a single nu
 Under `Read commited` isolation, the read transaction can return two different values, since the write transaction could have commited between the two reads
 - Since the value being read is already commited by the write transaction, this is allowed under `Read commited`, but often undesirable
 - This phenomenon is called *read skew*
-**Result of counter experiment using `Read commited`**
-As observed, some read transactions can return different values
+
+**Result of counter experiment using `Read commited`**:
 ![Result of counter experiment](screenshots/counter_results.png)
+As observed, some read transactions can return different values
 
 Using `Repeatable read` (also called `snapshot isolation`) solves this issue by using a historic snapshot of the items read during the read transaction
