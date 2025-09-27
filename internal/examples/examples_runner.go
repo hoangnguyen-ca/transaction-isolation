@@ -2,7 +2,7 @@ package examples
 
 type Example interface {
 	Init()
-	Run()
+	Run(iterations int)
 }
 
 func InitExamples(examples []Example) {
@@ -11,8 +11,8 @@ func InitExamples(examples []Example) {
 	}
 }
 
-func RunExamples(examples []Example) {
+func RunExamples(examples []Example, iterations int) {
 	for _, e := range examples {
-		e.Run()
+		e.Run(iterations)
 	}
 }

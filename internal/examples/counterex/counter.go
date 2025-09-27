@@ -7,15 +7,17 @@ import (
 	"log"
 	"sync"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type CounterExample struct {
-	pool *pgxpool.Pool
+	pool      *pgxpool.Pool
+	txOptions *pgx.TxOptions
 }
 
-func NewCounterExample(pool *pgxpool.Pool) CounterExample {
-	return CounterExample{pool: pool}
+func NewCounterExample(pool *pgxpool.Pool, txOptions *pgx.TxOptions) CounterExample {
+	return CounterExample{pool: pool, txOptions: txOptions}
 }
 
 func (ce CounterExample) Init() {
@@ -37,9 +39,8 @@ func (ce CounterExample) Init() {
 }
 
 // Run the example
-func (ce CounterExample) Run() {
+func (ce CounterExample) Run(iterations int) {
 	// spin up threads and run example
-	iterations := 100
 	var wg sync.WaitGroup
 	for i := 0; i < iterations; i++ {
 		wg.Add(1)
@@ -73,7 +74,7 @@ func (ce CounterExample) incrementCounter() {
 
 func (ce CounterExample) doubleReadCounter() (int, int) {
 	ctx := context.Background()
-	tx, err := ce.pool.Begin(ctx)
+	tx, err := ce.pool.BeginTx(ctx, *ce.txOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
