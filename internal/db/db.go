@@ -6,7 +6,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-const DSN = "postgres://user:password@localhost:5432/testdb"
+const DSN = "postgres://user:password@localhost:5432/testdb?pool_max_conns=50"
 
 func GetDBPool() *pgxpool.Pool {
 	ctx := context.Background()

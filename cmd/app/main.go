@@ -3,12 +3,12 @@ package main
 import (
 	"github.com/hoangnguyen-ca/transaction-isolation/internal/db"
 	"github.com/hoangnguyen-ca/transaction-isolation/internal/examples"
-	"github.com/hoangnguyen-ca/transaction-isolation/internal/examples/counter"
+	"github.com/hoangnguyen-ca/transaction-isolation/internal/examples/counterex"
 )
 
 func main() {
 	pool := db.GetDBPool()
-	myExamples := []examples.Example{counter.NewCounterExample(pool)}
+	myExamples := []examples.Example{counterex.NewCounterExample(pool)}
 
 	examples.InitExamples(myExamples)
 	examples.RunExamples(myExamples)
